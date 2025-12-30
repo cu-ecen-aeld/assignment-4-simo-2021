@@ -4,7 +4,7 @@
 # modification: 27DEC2025, by Arnaud SIMO
 ##############################################################
 
-AESD_ASSIGNMENTS_VERSION = 2a2175b5907adff9b352dc09618a5e40ad20c6e6 
+AESD_ASSIGNMENTS_VERSION = a83f102 
 AESD_ASSIGNMENTS_SITE = git@github.com:cu-ecen-aeld/assignments-3-and-later-simo-2021.git
 AESD_ASSIGNMENTS_SITE_METHOD = git
 AESD_ASSIGNMENTS_GIT_SUBMODULES = YES
@@ -20,6 +20,11 @@ define AESD_ASSIGNMENTS_INSTALL_TARGET_CMDS
 
 	# Binaire writer
 	$(INSTALL) -m 0755 $(@D)/finder-app/writer $(TARGET_DIR)/usr/bin/
+	$(INSTALL) -m 0755 $(@D)/finder-app/writer $(TARGET_DIR)/etc/finder-app/
+	
+   	# Installer le script finder-test.sh et finder.sh
+    	$(INSTALL) -m 0755 $(@D)/finder-app/finder-test.sh $(TARGET_DIR)/usr/bin/
+    	$(INSTALL) -m 0755 $(@D)/finder-app/finder.sh $(TARGET_DIR)/usr/bin/
 endef
 
 $(eval $(generic-package))

@@ -1,6 +1,5 @@
+# Author: Arnaud SIMO
+# 26DEC2025
 
-config BR2_PACKAGE_AESD_ASSIGNMENTS
-	bool "aesd-assignments"
-	help
-	  Includes the writer executable, finder.sh and tester.sh in the kernel image.
-	  Used to understand buildroot external trees and package builds.
+# Include Config.in of package aesd-assignments in menuconfig of Buildroot
+source "$BR2_EXTERNAL_project_base_PATH/package/aesd-assignments/Config.in"

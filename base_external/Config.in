@@ -1,1 +1,7 @@
+# Author: Arnaud SIMO
+# 26DEC2025
+
+# Include Config.in of package aesd-assignments in menuconfig of Buildroot
+menu "Base external packages"
 source "$BR2_EXTERNAL_project_base_PATH/package/aesd-assignments/Config.in"
+endmenu

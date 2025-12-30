@@ -1,2 +1,7 @@
 name: project_base
 desc: External project for AESD assignments
+
+# Ces fichiers permettent à Buildroot de détecter votre base_external comme un 
+# répertoire externe contenant des paquets personnalisés.
+#
+#
