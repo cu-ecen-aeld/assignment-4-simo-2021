@@ -1,27 +1,35 @@
-name: assignment-test
-on:
-    push:
-        tags-ignore:
-            - '*'
-        branches:
-            - '*'
+name: Build and Test
+
+on: [push, pull_request]
+
 jobs:
-    full-test:
-        container: cuaesd/aesd-autotest:24-assignment4-buildroot
-        runs-on: self-hosted
-        timeout-minutes: 120
-        steps:
-          - uses: actions/checkout@v2
-          - name: Checkout submodules
-            run: git submodule update --init --recursive
-          - uses: webfactory/ssh-agent@v0.5.3
-            with:
-                ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          - name: Run full test
-            env:
-              GIT_SSH_COMMAND: "ssh -o StrictHostKeyChecking=no"
-            run: ./full-test.sh
-          - name: Cleanup
-            if: always()
-            run: |
-              ssh-add -D
+  build:
+    runs-on: self-hosted  # Utilisez votre runner auto-hébergé (ou "ubuntu-latest" si vous utilisez un runner GitHub hébergé)
+
+    steps:
+      # Étape 1 : Configurez l'agent SSH pour utiliser la clé privée
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.8.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Étape 2 : Checkout du code avec les sous-modules
+      - name: Checkout code with submodules
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      # Étape 3 : Vérifiez que le sous-module est cloné
+      - name: Verify submodule
+        run: |
+          ls -la assignment-autotest
+          cd assignment-autotest
+          git remote -v
+
+      # Étape 4 : Ajoutez ici vos étapes de build/test (ex: compilation Buildroot)
+      - name: Build
+        run: |
+          # Exemple de commande pour compiler Buildroot
+          cd buildroot
+          make defconfig
+          make -j$(nproc)
